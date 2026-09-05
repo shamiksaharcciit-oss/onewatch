@@ -1,0 +1,194 @@
+# CI — offline, py3.12 and py3.13, with the memo verifier in it.
+#
+# THREE THINGS THIS FILE REFUSES TO DO
+# -----------------------------------
+# 1. **Reach the network for anything the gates need.** No `pip install -r`, no
+#    package index, no model endpoint. The engine has no runtime dependencies by
+#    design (see pyproject.toml), so the only install is pytest itself. A gate that
+#    needs the network is a gate that fails for reasons unrelated to the code, and an
+#    offline claim that CI does not test is an offline claim nobody has checked.
+#
+# 2. **Trust an exit code on its own.** Exit codes travel badly — through pipes,
+#    wrappers, `make`, and CI shells without `pipefail`. `$?` after a pipeline is the
+#    LAST command's status, not the gate's, so a failed gate reports success whenever
+#    anything is piped — and nearly every gate anyone runs is piped. The output
+#    contract is the only thing that travels with the work, so every gate here that
+#    has one has its output asserted, and any pipeline takes `pipefail` or
+#    `PIPESTATUS[0]`. See N-C001 in INTEGRITY.md, corrected by core's Forward 004a.
+#
+# 3. **Invoke a gate by a name that might resolve to something else.** Everything runs
+#    as `python -m …`, never `pytest` and never `python3`. Gate-verbatim: a claim about
+#    a gate is produced by the gate's own command, and `python -m pytest` is not
+#    interchangeable with `pytest` -- they can resolve to different interpreters and
+#    different installed packages.
+name: ci
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  gates:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false          # a 3.13-only failure must not be hidden by 3.12 passing
+      matrix:
+        python-version: ["3.12", "3.13"]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Record the interpreter actually in use
+        run: |
+          python -VV
+          python -c "import sys; print('executable:', sys.executable)"
+
+      - name: Install the test runner only
+        run: python -m pip install --disable-pip-version-check pytest
+
+      # -------------------------------------------------------------------------
+      # Byte-exactness comes first: if the checkout rewrote bytes, every downstream
+      # result is about a file that is not the file that was committed.
+      # -------------------------------------------------------------------------
+      - name: Received data survived checkout unmodified
+        run: |
+          python - <<'PY'
+          import pathlib, subprocess, sys
+          files = subprocess.run(["git", "ls-files"], capture_output=True,
+                                 text=True, check=True).stdout.split()
+          assert files, "git ls-files returned nothing"
+          # `fixtures/` is deliberately absent: upstream's telemetry artifacts are CRLF
+          # files, and faithful copies of them contain 2844 carriage returns. Those
+          # bytes ARE the evidence. CR-absence is only a corruption signal for data that
+          # arrived LF-only; for the fixtures the real check is the digest pin, which
+          # `python -m pytest` runs. See tests/test_byte_discipline.py, LF_ONLY_DIRS.
+          watched = [f for f in files
+                     if f.startswith(("docs/from_core/", "docs/to_core/", "vendor/"))
+                     and not f.endswith(".zip")]
+          assert watched, "no received-data files found; refusing to pass vacuously"
+          bad = {f: pathlib.Path(f).read_bytes().count(b"\r") for f in watched}
+          bad = {f: n for f, n in bad.items() if n}
+          if bad:
+              for f, n in bad.items():
+                  print(f"CR bytes in received data: {f} ({n})", file=sys.stderr)
+              raise SystemExit("end-of-line translation has reached received data")
+          print(f"clean: {len(watched)} received-data files, 0 carriage returns")
+          PY
+
+      # -------------------------------------------------------------------------
+      # NOT RUN IN THIS REPOSITORY: the two memo-verifier gates.
+      #
+      # Upstream, this workflow verifies the integrity footer on every archived memo
+      # and then proves the verifier can FAIL, by tampering one byte of a real memo
+      # and asserting exit 2 -- because a verifier that cannot fail is not evidence of
+      # anything. Both gates read `docs/from_core/` and `docs/to_core/`, which are
+      # private correspondence and are not published here.
+      #
+      # They are removed rather than pointed at an empty glob. Left in place they do
+      # not skip: the shell passes the unexpanded pattern through and the verifier
+      # exits 5 on a file it cannot read, which is a red build that means nothing.
+      # Made permissive they would report a verification that never happened -- the
+      # failure mode this project exists to refuse. See the same decision for
+      # `test_every_archived_memo_still_verifies` in conftest.py, and the section
+      # "What does not run here, and why" in README.md.
+      #
+      # `scripts/verify_memo.py` itself still ships, and the tampering gate should
+      # return in a self-contained form: seal a file the step creates, verify it,
+      # tamper one byte, assert exit 2. That needs no correspondence and is strictly
+      # the better test. Queued; not written during launch week.
+      # -------------------------------------------------------------------------
+
+      - name: Vendored self-test — contract asserted, not just exit code
+        working-directory: vendor/rederivable-manifest
+        run: |
+          # `pipefail` because the next line is a PIPELINE: without it the shell takes
+          # `tee`'s status and a failed self-test would sail through (N-C001, corrected
+          # by Forward 004a). The output contract below is still the primary check —
+          # pipefail is the belt, the contract is the braces, and the contract is the
+          # half that travels to anyone reading the log.
+          set -o pipefail
+          python validate.py --selftest | tee /tmp/selftest.out
+          tail -1 /tmp/selftest.out | grep -qx "ALL PASS" \
+            || { echo "final line was not ALL PASS"; exit 1; }
+          grep -c "\[PASS\]" /tmp/selftest.out | grep -qvx "0" \
+            || { echo "self-test reported no checks"; exit 1; }
+
+      # -------------------------------------------------------------------------
+      # The launch deliverable, re-derived on every commit. This is the product's own
+      # claim performed on its own evidence: three receipts recomputed from bytes on
+      # disk, the chain verified, and the Merkle root checked against the root recorded
+      # on the live day of 2026-08-22. The suite runs this too, via subprocess; it is
+      # given its own step because a deliverable that stops verifying should name itself
+      # in the log rather than appear as one dot among 258.
+      # -------------------------------------------------------------------------
+      # Both launch artifacts are BUILD artifacts: generated from the frozen record,
+      # never hand-edited. Checking them here is what stops the narration from drifting
+      # away from the evidence it describes -- the failure the demo header records, where
+      # a hard-coded summary line reported a receipt the run never produced.
+      # onewatch, regenerated from the committed store. The page that ships is the page
+      # the tests check, and regenerating it in CI is what stops the published HTML from
+      # drifting away from the receipts it reports on.
+      - name: onewatch regenerates from the store
+        run: |
+          set -o pipefail
+          python -m canary.viewer | tee /tmp/onewatch.out
+          git diff --exit-code -- docs/launch/onewatch.html             || { echo "the committed page differs from a fresh generation"; exit 1; }
+
+      # D's scheduled instrument-health check, on the mock. Exit 0 on SATURATED is
+      # the contract, not an oversight: saturation is a state to surface, and a non-zero
+      # exit would teach a scheduler to page someone every run until it was silenced.
+      - name: The instrument-health check runs and re-derives (mock, offline, free)
+        run: |
+          set -o pipefail
+          python scripts/health_check.py | tee /tmp/health.out
+          grep -q "re-derived   ok=True" /tmp/health.out             || { echo "the health receipt did not re-derive"; exit 1; }
+
+      # C's calibration path, executed against the deterministic mock. Q08 ruled the
+      # mock in scope: the line is the live endpoint, not testing. Running it here is what
+      # stops the retrieval family from being shipped calibration-ready with a calibration
+      # path nobody has ever executed.
+      - name: The retrieval family's calibration path runs (mock, offline, free)
+        run: python scripts/dryrun_retrieval.py
+
+      - name: The launch narration still matches the frozen record
+        run: python scripts/build_narration.py --check
+
+      - name: The disclosure package stages, and gen-1-c4 is still ACTIVE
+        run: python scripts/stage_disclosure.py
+
+      - name: The C4 incident of record still re-derives
+        run: |
+          set -o pipefail
+          python scripts/rederive_incident.py | tee /tmp/rederive.out
+          grep -q "MATCH -- bit-for-bit identical to the live-day root" /tmp/rederive.out             || { echo "anchor root no longer matches the live-day root"; exit 1; }
+
+      # -------------------------------------------------------------------------
+      # The suite. `python -m pytest` with no arguments, exactly as quoted in every
+      # report that claims it is green.
+      # -------------------------------------------------------------------------
+      - name: Test suite
+        run: python -m pytest
+
+      - name: Confirm the suite ran offline
+        run: |
+          python - <<'PY'
+          # Not a proof of offline-ness -- it is an assertion that nothing in the
+          # engine imports a network client, which is the part we control.
+          import pathlib
+          banned = ("import requests", "import httpx", "import urllib.request",
+                    "from requests", "from httpx")
+          hits = []
+          for p in pathlib.Path("canary").rglob("*.py"):
+              text = p.read_text(encoding="utf-8")
+              hits += [f"{p}: {b}" for b in banned if b in text]
+          assert not hits, "network client imported in the engine:\n" + "\n".join(hits)
+          print("engine imports no network client")
+          PY

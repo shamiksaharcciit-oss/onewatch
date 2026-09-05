@@ -1,0 +1,555 @@
+{
+  "cycle": "cycle3_model_swap",
+  "timestamp_utc": "2026-08-03T19:02:20Z",
+  "monitored_pipeline": "F768",
+  "model_requested": "claude-haiku-4-5-20251001",
+  "model_served": [
+    "claude-haiku-4-5-20251001"
+  ],
+  "n_probes": 30,
+  "counts": {
+    "wrong_abstention": 0,
+    "unsupported_answer": {
+      "same_doc": 16,
+      "cross_doc": 26
+    }
+  },
+  "rates": {
+    "wrong_abstention": {
+      "numerator": 0,
+      "denominator": 30,
+      "rate": 0.0
+    },
+    "unsupported_answer_same_doc": {
+      "numerator": 16,
+      "denominator": 30,
+      "rate": 0.533333
+    },
+    "unsupported_answer_cross_doc": {
+      "numerator": 26,
+      "denominator": 30,
+      "rate": 0.866667
+    }
+  },
+  "cost": {
+    "llm_calls": 90,
+    "llm_tokens": 103388,
+    "input_tokens": 98957,
+    "output_tokens": 4431,
+    "cache_hits": 0,
+    "est_usd": 0.6056
+  },
+  "seconds": 116.8,
+  "probes": [
+    {
+      "query_id": "A-014-aster-router::syn",
+      "replies": {
+        "answer_bearing": {
+          "text": "Based on the provided context, the key configuration defaults of the Aster router are:\n\n1. \"The Aster router applies a default request timeout of 1200 milliseconds.\"\n2. \"The Aster router sustains up to 67000 queries per second on a single node.\"\n3. \"The Aster router persists its index to disk in the ORC file format.\"\n4. \"The Aster router evicts hot vectors using a LFU replacement policy.\"",
+          "refusal": 0
+        },
+        "same_doc": {
+          "text": "Based on the provided context, the key configuration defaults of the Aster router are:\n\n1. \"The Aster router listens for gRPC traffic on port 6565 by default.\"\n2. \"The Aster router uses the Annoy algorithm for approximate nearest-neighbor search.\"\n3. \"The Aster router evicts hot vectors using a LFU replacement policy.\"",
+          "unsupported_answer": 1
+        },
+        "cross_doc": {
+          "text": "NOT FOUND\n\nThe context provided does not contain any information about an \"Aster router\" or its configuration defaults. The context only discusses the Ion indexer and various system components related to it.",
+          "unsupported_answer": 1
+        }
+      }
+    },
+    {
+      "query_id": "A-030-kestrel-broker::syn",
+      "replies": {
+        "answer_bearing": {
+          "text": "Based on the provided context, the key configuration defaults of the Kestrel broker are:\n\n1. \"The Kestrel broker listens for gRPC traffic on port 7000 by default.\"\n2. \"The Kestrel broker applies a default request timeout of 900 milliseconds.\"\n\nAdditionally, the context mentions that \"The Kestrel broker persists its index to disk in the Arrow file format\" and \"The Kestrel broker uses the ScaNN algorithm for approximate nearest-neighbor search,\" though these are not explicitly stated as defaults. The context also notes that \"The Kestrel broker evicts hot vectors using a LFU replacement policy.\"",
+          "refusal": 0
+        },
+        "same_doc": {
+          "text": "NOT FOUND\n\nThe context does not contain information about the key configuration defaults of the Kestrel broker. The only details provided about the Kestrel broker are:\n\n1. \"The Kestrel broker evicts hot vectors using a LFU replacement policy.\"\n2. \"The Kestrel broker is distributed under the BSD-3-Clause license.\"\n3. \"The Kestrel broker sustains up to 125000 queries per second on a single node.\"\n\nThese statements describe specific capabilities and licensing, but not configuration defaults.",
+          "unsupported_answer": 1
+        },
+        "cross_doc": {
+          "text": "NOT FOUND\n\nThe context provided discusses the Halcyon compactor and its various operations, but does not contain any information about the Kestrel broker or its configuration defaults.",
+          "unsupported_answer": 1
+        }
+      }
+    },
+    {
+      "query_id": "A-011-falcon-sharder::syn",
+      "replies": {
+        "answer_bearing": {
+          "text": "NOT FOUND\n\nThe provided context does not contain information about the key configuration defaults of the Falcon sharder. The context describes various operational and maintenance procedures performed by different components in relation to the Falcon sharder, but does not specify its configuration defaults.",
+          "refusal": 0
+        },
+        "same_doc": {
+          "text": "NOT FOUND\n\nThe context does not contain information about the key configuration defaults of the Falcon sharder. The context only mentions that \"The Falcon sharder reached general availability in release v0.9.8\" and \"The Falcon sharder evicts hot vectors using a LFU replacement policy.\"",
+          "unsupported_answer": 1
+        },
+        "cross_doc": {
+          "text": "NOT FOUND\n\nThe context provided contains information about the Kestrel indexer, not the Falcon sharder. There is no information about the Falcon sharder or its configuration defaults in the given context.",
+          "unsupported_answer": 1
+        }
+      }
+    },
+    {
+      "query_id": "A-001-basalt-cache::f7",
+      "replies": {
+        "answer_bearing": {
+          "text": "\"The Basalt cache uses the HNSW algorithm for approximate nearest-neighbor search.\"",
+          "refusal": 0
+        },
+        "same_doc": {
+          "text": "NOT FOUND\n\nThe context does not contain information about which algorithm the Basalt cache uses for approximate nearest-neighbor search. The context only mentions that \"The Basalt cache evicts hot vectors using a S3-FIFO replacement policy\" and that it \"sustains up to 18000 queries per second on a single node,\" but does not specify the approximate nearest-neighbor search algorithm.",
+          "unsupported_answer": 1
+        },
+        "cross_doc": {
+          "text": "NOT FOUND\n\nThe context does not contain information about a \"Basalt cache\" or its algorithms. The context only mentions that \"The Kestrel broker uses the ScaNN algorithm for approximate nearest-neighbor search.\"",
+          "unsupported_answer": 1
+        }
+      }
+    },
+    {
+      "query_id": "A-018-verde-compactor::f3",
+      "replies": {
+        "answer_bearing": {
+          "text": "\"The Verde compactor persists its index to disk in the Protobuf file format.\"",
+          "refusal": 0
+        },
+        "same_doc": {
+          "text": "NOT FOUND",
+          "unsupported_answer": 0
+        },
+        "cross_doc": {
+          "text": "NOT FOUND\n\nThe provided context does not contain any information about the Verde compactor or the file format it uses to persist its index to disk.",
+          "unsupported_answer": 1
+        }
+      }
+    },
+    {
+      "query_id": "A-040-marlin-planner::syn",
+      "replies": {
+        "answer_bearing": {
+          "text": "Based on the provided context, the key configuration defaults of the Marlin planner are:\n\n1. \"The Marlin planner persists its index to disk in the ORC file format.\"\n2. \"The system uses the ScaNN algorithm for approximate nearest-neighbor search.\"\n3. \"The Marlin planner evicts hot vectors using a LRU replacement policy.\"\n4. \"The Marlin planner applies a default request timeout of 500 milliseconds.\"\n5. \"The Marlin planner listens for gRPC traffic on port 8443 by default.\"",
+          "refusal": 0
+        },
+        "same_doc": {
+          "text": "Based on the provided context, the key configuration defaults of the Marlin planner are:\n\n1. \"The Marlin planner listens for gRPC traffic on port 8443 by default.\"\n\n2. \"The Marlin planner sustains up to 3300 queries per second on a single node.\"\n\nAdditionally, \"The Marlin planner reached general availability in release v4.0.0\" and \"The Marlin planner is distributed under the MIT license.\"",
+          "unsupported_answer": 1
+        },
+        "cross_doc": {
+          "text": "NOT FOUND\n\nThe context provided contains information about the Glint collator and various system components, but does not contain any information about the Marlin planner or its configuration defaults.",
+          "unsupported_answer": 1
+        }
+      }
+    },
+    {
+      "query_id": "A-025-juniper-cache::mh",
+      "replies": {
+        "answer_bearing": {
+          "text": "The Juniper cache applies a default request timeout of 1200 milliseconds and \"listens for gRPC traffic on port 7000 by default.\"",
+          "refusal": 0
+        },
+        "same_doc": {
+          "text": "NOT FOUND\n\nThe context states that \"The Juniper cache applies a default request timeout of 1200 milliseconds,\" but it does not contain any information about which port it listens for gRPC traffic by default.",
+          "unsupported_answer": 1
+        },
+        "cross_doc": {
+          "text": "NOT FOUND\n\nThe context does not mention any vector-search system with a timeout of 1200 milliseconds. While the context does state that \"The Zephyr ledger listens for gRPC traffic on port 9090 by default,\" it also specifies that \"The Zephyr ledger applies a default request timeout of 900 milliseconds,\" not 1200 milliseconds.",
+          "unsupported_answer": 1
+        }
+      }
+    },
+    {
+      "query_id": "A-019-crag-broker::syn",
+      "replies": {
+        "answer_bearing": {
+          "text": "Based on the provided context, the key configuration defaults of the Crag broker are:\n\n1. \"The Crag broker applies a default request timeout of 350 milliseconds.\"\n\n2. \"The Crag broker sustains up to 9500 queries per second on a single node.\"\n\n3. \"The Crag broker evicts hot vectors using a CLOCK-Pro replacement policy.\"\n\n4. \"The Crag broker uses the Annoy algorithm for approximate nearest-neighbor search.\"",
+          "refusal": 0
+        },
+        "same_doc": {
+          "text": "Based on the provided context, the key configuration defaults of the Crag broker are:\n\n1. \"The Crag broker uses the Annoy algorithm for approximate nearest-neighbor search.\"\n2. \"The Crag broker persists its index to disk in the Avro file format.\"",
+          "unsupported_answer": 1
+        },
+        "cross_doc": {
+          "text": "NOT FOUND\n\nThe context provided discusses the Solstice resolver and various system components, but does not contain any information about a \"Crag broker\" or its configuration defaults.",
+          "unsupported_answer": 1
+        }
+      }
+    },
+    {
+      "query_id": "A-015-beacon-scheduler::f2",
+      "replies": {
+        "answer_bearing": {
+          "text": "\"The Beacon scheduler applies a default request timeout of 900 milliseconds.\"",
+          "refusal": 0
+        },
+        "same_doc": {
+          "text": "NOT FOUND",
+          "unsupported_answer": 0
+        },
+        "cross_doc": {
+          "text": "NOT FOUND\n\nThe context provided discusses the Crag broker and various system components, but does not contain any information about a \"Beacon scheduler\" or its default request timeout. The context does mention that \"The Crag broker applies a default request timeout of 350 milliseconds,\" but this refers to the Crag broker, not the Beacon scheduler.",
+          "unsupported_answer": 1
+        }
+      }
+    },
+    {
+      "query_id": "A-034-cirrus-sharder::syn",
+      "replies": {
+        "answer_bearing": {
+          "text": "Based on the context provided, the key configuration defaults of the Cirrus sharder are:\n\n1. \"The Cirrus sharder sustains up to 3300 queries per second on a single node.\"\n2. \"The Cirrus sharder evicts hot vectors using a LRU replacement policy.\"\n3. \"The Cirrus sharder applies a default request timeout of 900 milliseconds.\"\n4. \"The Cirrus sharder listens for gRPC traffic on port 6565 by default.\"\n5. \"The Cirrus sharder persists its index to disk in the Protobuf file format.\"\n6. \"The Cirrus sharder uses the ScaNN algorithm for approximate nearest-neighbor search.\"",
+          "refusal": 0
+        },
+        "same_doc": {
+          "text": "NOT FOUND\n\nThe context does not contain information about the key configuration defaults of the Cirrus sharder. The context only mentions that \"The Cirrus sharder persists its index to disk in the Protobuf file format\" and \"The Cirrus sharder uses the ScaNN algorithm for approximate nearest-neighbor search.\"",
+          "unsupported_answer": 1
+        },
+        "cross_doc": {
+          "text": "NOT FOUND\n\nThe context provided discusses the Marlin planner and its various components, but does not contain any information about the Cirrus sharder or its configuration defaults.",
+          "unsupported_answer": 1
+        }
+      }
+    },
+    {
+      "query_id": "A-019-crag-broker::f4",
+      "replies": {
+        "answer_bearing": {
+          "text": "The Crag broker is distributed under the AGPL-3.0 license.",
+          "refusal": 0
+        },
+        "same_doc": {
+          "text": "NOT FOUND",
+          "unsupported_answer": 0
+        },
+        "cross_doc": {
+          "text": "NOT FOUND\n\nThe context provided discusses the Talon planner and various system components, but does not contain any information about a \"Crag broker\" or its license.",
+          "unsupported_answer": 1
+        }
+      }
+    },
+    {
+      "query_id": "A-001-basalt-cache::syn",
+      "replies": {
+        "answer_bearing": {
+          "text": "Based on the provided context, the key configuration defaults of the Basalt cache are:\n\n1. \"The Basalt cache sustains up to 18000 queries per second on a single node.\"\n2. \"The Basalt cache persists its index to disk in the Protobuf file format.\"\n3. \"The Basalt cache reached general availability in release v5.1.4.\"\n4. \"The Basalt cache applies a default request timeout of 1200 milliseconds.\"\n5. \"The Basalt cache listens for gRPC traffic on port 50051 by default.\"\n6. \"The Basalt cache evicts hot vectors using a S3-FIFO replacement policy.\"",
+          "refusal": 0
+        },
+        "same_doc": {
+          "text": "Based on the provided context, the key configuration defaults of the Basalt cache are:\n\n1. \"The Basalt cache applies a default request timeout of 1200 milliseconds.\"\n2. \"The Basalt cache listens for gRPC traffic on port 50051 by default.\"\n3. \"The Basalt cache uses the HNSW algorithm for approximate nearest-neighbor search.\"\n\nAdditionally, \"The Basalt cache is distributed under the Apache-2.0 license.\"",
+          "unsupported_answer": 1
+        },
+        "cross_doc": {
+          "text": "NOT FOUND\n\nThe context provided does not contain any information about the Basalt cache or its configuration defaults. The context discusses the Aster router and various system components, but does not mention Basalt cache.",
+          "unsupported_answer": 1
+        }
+      }
+    },
+    {
+      "query_id": "A-036-halcyon-cache::f4",
+      "replies": {
+        "answer_bearing": {
+          "text": "\"The Halcyon cache sustains up to 42000 queries per second on a single node.\"",
+          "refusal": 0
+        },
+        "same_doc": {
+          "text": "NOT FOUND",
+          "unsupported_answer": 0
+        },
+        "cross_doc": {
+          "text": "NOT FOUND\n\nThe context does not contain any information about a \"Halcyon cache.\" The context only mentions that \"The system sustains up to 67000 queries per second on a single node,\" referring to the Drift resolver, not a Halcyon cache.",
+          "unsupported_answer": 1
+        }
+      }
+    },
+    {
+      "query_id": "A-030-kestrel-broker::f4",
+      "replies": {
+        "answer_bearing": {
+          "text": "\"The Kestrel broker applies a default request timeout of 900 milliseconds.\"",
+          "refusal": 0
+        },
+        "same_doc": {
+          "text": "NOT FOUND",
+          "unsupported_answer": 0
+        },
+        "cross_doc": {
+          "text": "NOT FOUND",
+          "unsupported_answer": 0
+        }
+      }
+    },
+    {
+      "query_id": "A-014-aster-router::f1",
+      "replies": {
+        "answer_bearing": {
+          "text": "The Aster router persists its index to disk in the ORC file format.",
+          "refusal": 0
+        },
+        "same_doc": {
+          "text": "NOT FOUND",
+          "unsupported_answer": 0
+        },
+        "cross_doc": {
+          "text": "NOT FOUND\n\nThe context provided discusses the Kestrel broker, not the Aster router. While the context states that \"The Kestrel broker persists its index to disk in the Arrow file format,\" there is no information about an Aster router or its file format.",
+          "unsupported_answer": 1
+        }
+      }
+    },
+    {
+      "query_id": "A-014-aster-router::f3",
+      "replies": {
+        "answer_bearing": {
+          "text": "The default request timeout of the Aster router is \"1200 milliseconds.\"",
+          "refusal": 0
+        },
+        "same_doc": {
+          "text": "NOT FOUND",
+          "unsupported_answer": 0
+        },
+        "cross_doc": {
+          "text": "NOT FOUND",
+          "unsupported_answer": 0
+        }
+      }
+    },
+    {
+      "query_id": "A-037-vega-router::f4",
+      "replies": {
+        "answer_bearing": {
+          "text": "\"The Vega router uses the NGT algorithm for approximate nearest-neighbor search.\"",
+          "refusal": 0
+        },
+        "same_doc": {
+          "text": "NOT FOUND",
+          "unsupported_answer": 0
+        },
+        "cross_doc": {
+          "text": "NOT FOUND\n\nThe context does not contain information about which algorithm the Vega router uses. The context only mentions that \"The system uses the Annoy algorithm for approximate nearest-neighbor search,\" but does not specify this is for the Vega router. The Krait router is mentioned in the context, but not the Vega router.",
+          "unsupported_answer": 1
+        }
+      }
+    },
+    {
+      "query_id": "A-026-krait-router::syn",
+      "replies": {
+        "answer_bearing": {
+          "text": "NOT FOUND\n\nThe context does not contain information about key configuration defaults of the Krait router. The only specific default mentioned is that \"The Krait router listens for gRPC traffic on port 8443 by default.\"",
+          "refusal": 0
+        },
+        "same_doc": {
+          "text": "NOT FOUND\n\nThe context does not contain information about the key configuration defaults of the Krait router. The context only states that \"The Krait router is distributed under the Apache-2.0 license\" and then describes various system components and their functions, but does not detail any configuration defaults.",
+          "unsupported_answer": 1
+        },
+        "cross_doc": {
+          "text": "NOT FOUND\n\nThe context provided discusses the Crag broker, not the Krait router. Therefore, I cannot answer the question about the Krait router's key configuration defaults based on the given context.",
+          "unsupported_answer": 1
+        }
+      }
+    },
+    {
+      "query_id": "A-019-crag-broker::f3",
+      "replies": {
+        "answer_bearing": {
+          "text": "\"The Crag broker applies a default request timeout of 350 milliseconds.\"",
+          "refusal": 0
+        },
+        "same_doc": {
+          "text": "NOT FOUND",
+          "unsupported_answer": 0
+        },
+        "cross_doc": {
+          "text": "NOT FOUND\n\nThe context provided discusses the Nimbus gateway and its various components, but does not contain any information about a \"Crag broker\" or its default request timeout.",
+          "unsupported_answer": 1
+        }
+      }
+    },
+    {
+      "query_id": "A-010-marlin-collator::syn",
+      "replies": {
+        "answer_bearing": {
+          "text": "Based on the provided context, the key configuration defaults of the Marlin collator are:\n\n1. \"The Marlin collator applies a default request timeout of 900 milliseconds.\"\n2. \"The Marlin collator listens for gRPC traffic on port 7000 by default.\"",
+          "refusal": 0
+        },
+        "same_doc": {
+          "text": "NOT FOUND\n\nThe context does not contain information about the key configuration defaults of the Marlin collator. The only information provided about the Marlin collator is: \"The Marlin collator evicts hot vectors using a S3-FIFO replacement policy\" and \"The Marlin collator reached general availability in release v4.0.0.\"",
+          "unsupported_answer": 1
+        },
+        "cross_doc": {
+          "text": "NOT FOUND\n\nThe context provided does not contain any information about the Marlin collator or its configuration defaults. The context discusses the Onyx planner and various system components, but makes no mention of a Marlin collator.",
+          "unsupported_answer": 1
+        }
+      }
+    },
+    {
+      "query_id": "A-005-onyx-planner::syn",
+      "replies": {
+        "answer_bearing": {
+          "text": "Based on the provided context, the key configuration defaults of the Onyx planner are:\n\n1. \"The Onyx planner listens for gRPC traffic on port 7000 by default.\"\n\n2. \"The system persists its index to disk in the Parquet file format.\"\n\n3. \"The system uses the Annoy algorithm for approximate nearest-neighbor search.\"\n\n4. \"The Onyx planner sustains up to 18000 queries per second on a single node.\"\n\n5. \"The Onyx planner evicts hot vectors using a 2Q replacement policy.\"",
+          "refusal": 0
+        },
+        "same_doc": {
+          "text": "NOT FOUND\n\nThe provided context does not contain any information about the Onyx planner or its configuration defaults.",
+          "unsupported_answer": 1
+        },
+        "cross_doc": {
+          "text": "NOT FOUND\n\nThe context provided does not contain information about an \"Onyx planner\" or its configuration defaults. The context discusses various system components like the Quartz resolver, deployment pipeline, health monitor, and other services, but does not mention an Onyx planner.",
+          "unsupported_answer": 1
+        }
+      }
+    },
+    {
+      "query_id": "A-035-onyx-indexer::f2",
+      "replies": {
+        "answer_bearing": {
+          "text": "\"The Onyx indexer is distributed under the MPL-2.0 license.\"",
+          "refusal": 0
+        },
+        "same_doc": {
+          "text": "NOT FOUND",
+          "unsupported_answer": 0
+        },
+        "cross_doc": {
+          "text": "NOT FOUND\n\nThe context provided does not contain any information about an \"Onyx indexer\" or its license. The context only mentions that \"The Basalt cache is distributed under the Apache-2.0 license.\"",
+          "unsupported_answer": 1
+        }
+      }
+    },
+    {
+      "query_id": "A-016-nimbus-gateway::f3",
+      "replies": {
+        "answer_bearing": {
+          "text": "\"The Nimbus gateway sustains up to 18000 queries per second on a single node.\"",
+          "refusal": 0
+        },
+        "same_doc": {
+          "text": "NOT FOUND",
+          "unsupported_answer": 0
+        },
+        "cross_doc": {
+          "text": "NOT FOUND",
+          "unsupported_answer": 0
+        }
+      }
+    },
+    {
+      "query_id": "A-000-kestrel-indexer::f1",
+      "replies": {
+        "answer_bearing": {
+          "text": "\"The Kestrel indexer listens for gRPC traffic on port 8081 by default.\"",
+          "refusal": 0
+        },
+        "same_doc": {
+          "text": "NOT FOUND",
+          "unsupported_answer": 0
+        },
+        "cross_doc": {
+          "text": "NOT FOUND\n\nThe context mentions that \"The system listens for gRPC traffic on port 7000 by default,\" but it does not specify that this is the Kestrel indexer. The context does not contain information about a \"Kestrel indexer.\"",
+          "unsupported_answer": 1
+        }
+      }
+    },
+    {
+      "query_id": "A-019-crag-broker::f5",
+      "replies": {
+        "answer_bearing": {
+          "text": "The Crag broker uses the Annoy algorithm for approximate nearest-neighbor search.",
+          "refusal": 0
+        },
+        "same_doc": {
+          "text": "NOT FOUND\n\nThe context does not specify which algorithm the Crag broker uses for approximate nearest-neighbor search. While the context describes the Crag broker as \"a distributed vector-search broker,\" it does not mention the specific algorithm used for approximate nearest-neighbor search.",
+          "unsupported_answer": 1
+        },
+        "cross_doc": {
+          "text": "NOT FOUND\n\nThe context provided discusses the Basalt cache but does not contain any information about a \"Crag broker\" or its algorithms for approximate nearest-neighbor search.",
+          "unsupported_answer": 1
+        }
+      }
+    },
+    {
+      "query_id": "A-002-cobalt-router::f0",
+      "replies": {
+        "answer_bearing": {
+          "text": "\"The Cobalt router listens for gRPC traffic on port 8081 by default.\"",
+          "refusal": 0
+        },
+        "same_doc": {
+          "text": "NOT FOUND",
+          "unsupported_answer": 0
+        },
+        "cross_doc": {
+          "text": "NOT FOUND",
+          "unsupported_answer": 0
+        }
+      }
+    },
+    {
+      "query_id": "A-016-nimbus-gateway::syn",
+      "replies": {
+        "answer_bearing": {
+          "text": "Based on the provided context, the key configuration defaults of the Nimbus gateway are:\n\n1. \"The Nimbus gateway listens for gRPC traffic on port 9090 by default.\"\n\n2. \"The Nimbus gateway evicts hot vectors using a LRU replacement policy.\"\n\n3. \"The Nimbus gateway uses the DiskANN algorithm for approximate nearest-neighbor search.\"\n\n4. \"The Nimbus gateway sustains up to 18000 queries per second on a single node.\"\n\n5. \"The Nimbus gateway persists its index to disk in the ORC file format.\"",
+          "refusal": 0
+        },
+        "same_doc": {
+          "text": "NOT FOUND\n\nThe context does not contain information about the key configuration defaults of the Nimbus gateway. The only mention of the Nimbus gateway states: \"The Nimbus gateway reached general availability in release v1.7.2.\"",
+          "unsupported_answer": 1
+        },
+        "cross_doc": {
+          "text": "NOT FOUND\n\nThe context provided discusses the Quartz scheduler and various operational components, but does not contain any information about the Nimbus gateway or its configuration defaults.",
+          "unsupported_answer": 1
+        }
+      }
+    },
+    {
+      "query_id": "A-031-basalt-resolver::syn",
+      "replies": {
+        "answer_bearing": {
+          "text": "NOT FOUND\n\nThe context provided does not contain information about key configuration defaults of the Basalt resolver. The context describes various operational and system management tasks performed by different components in relation to the Basalt resolver, but does not specify any configuration defaults.",
+          "refusal": 0
+        },
+        "same_doc": {
+          "text": "NOT FOUND\n\nThe context only states that \"The Basalt resolver uses the HNSW algorithm for approximate nearest-neighbor search.\" It does not contain information about key configuration defaults of the Basalt resolver.",
+          "unsupported_answer": 1
+        },
+        "cross_doc": {
+          "text": "NOT FOUND\n\nThe context provided discusses the Zephyr ledger and its various components, but does not contain any information about a \"Basalt resolver\" or its configuration defaults.",
+          "unsupported_answer": 1
+        }
+      }
+    },
+    {
+      "query_id": "A-021-fable-ledger::mh",
+      "replies": {
+        "answer_bearing": {
+          "text": "The Fable ledger, which uses an ARC replacement policy for evicting hot vectors, \"is distributed under the BSD-3-Clause license.\"",
+          "refusal": 0
+        },
+        "same_doc": {
+          "text": "NOT FOUND\n\nThe context mentions that \"The Fable ledger evicts hot vectors using a ARC replacement policy,\" but it does not contain any information about the license under which the Fable ledger (or any vector-search system with ARC cache policy) is distributed.",
+          "unsupported_answer": 1
+        },
+        "cross_doc": {
+          "text": "NOT FOUND\n\nThe context does not mention any vector-search system with an ARC cache policy. While the context does state that \"The Ridge broker is distributed under the AGPL-3.0 license,\" there is no information provided about Ridge broker's cache policy being ARC, so I cannot confirm this is the system being asked about.",
+          "unsupported_answer": 1
+        }
+      }
+    },
+    {
+      "query_id": "A-034-cirrus-sharder::f3",
+      "replies": {
+        "answer_bearing": {
+          "text": "\"The Cirrus sharder listens for gRPC traffic on port 6565 by default.\"",
+          "refusal": 0
+        },
+        "same_doc": {
+          "text": "NOT FOUND",
+          "unsupported_answer": 0
+        },
+        "cross_doc": {
+          "text": "NOT FOUND\n\nThe context provided contains information about the Cobalt ledger listening for gRPC traffic on port 6565 by default, but does not contain any information about a Cirrus sharder or which port it listens on.",
+          "unsupported_answer": 1
+        }
+      }
+    }
+  ]
+}

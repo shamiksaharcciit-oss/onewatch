@@ -1,0 +1,3 @@
+NOT FOUND
+
+The context only mentions the default request timeout for the aster balancer (2604 milliseconds), not for the kestrel resolver.

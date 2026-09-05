@@ -1,0 +1,102 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "canary"
+version = "0.0.0"
+description = "Change evidence for LLM/RAG systems: a frozen, recomputable record that behaviour changed."
+readme = "README.md"
+license = { text = "Apache-2.0" }
+authors = [{ name = "Shamik Saha" }]
+requires-python = ">=3.12"
+
+# No runtime dependencies, deliberately.
+#
+# X-6 makes alarm dependencies hard requirements, never optional extras; the cheapest
+# way to honour that is to have none. A receipt that can only be re-derived by a third
+# party who first resolves a dependency tree is a receipt with a footnote. Everything
+# the engine needs -- sha256, canonical JSON, Merkle -- is in the standard library or
+# in vendor/.
+dependencies = []
+
+[project.optional-dependencies]
+dev = ["pytest>=8"]
+
+# The live probing path, and only that path. `canary.target.live` calls a real endpoint
+# and needs the official SDK; nothing else in the engine imports it.
+#
+# This is not X-6 being softened. X-6 forbids an alarm dependency that degrades quietly,
+# and this one cannot: a missing SDK raises at construction with an install instruction,
+# with no fallback to a mock and no "live unavailable, continuing" path. The property that
+# had to be protected is that RE-DERIVATION resolves nothing — and re-derivation never
+# imports this module, because it replays a comparison over frozen bytes rather than
+# calling anyone. Collection may have a dependency; verification may not.
+live = ["anthropic>=0.40"]
+
+[tool.setuptools.packages.find]
+include = ["canary*"]
+
+# ---------------------------------------------------------------------------------
+# pytest
+# ---------------------------------------------------------------------------------
+# `testpaths` is what makes the bare gate command `python -m pytest` collect
+# everything: the verifier's tests live beside the script in scripts/, the
+# repository-wide discipline tests live in tests/. Gate-verbatim means a claim about
+# this gate is produced by this command and no other -- so the command must not need
+# arguments to be complete.
+[tool.pytest.ini_options]
+testpaths = ["scripts", "tests"]
+python_files = ["test_*.py"]
+addopts = "-q"
+
+# ---------------------------------------------------------------------------------
+# E10 layer 2 of 3: exclusion lists
+# ---------------------------------------------------------------------------------
+# Formatters, linters and auto-fixers are byte-rewriting tools. A single run of one
+# over a received-data path destroys the evidence it was pointed at -- silently, and
+# with a green exit code, because from the tool's point of view it did its job.
+#
+# Layer 1 (`.gitattributes`, `* -text`) stops git from rewriting bytes. THIS is the
+# layer that stops our own tooling from doing it. The paths below are excluded from
+# every such tool configured in this file, and any tool added later MUST be given the
+# same exclusions in the same place; `tests/test_byte_discipline.py::
+# test_received_paths_are_excluded_from_every_formatter` fails if these paths stop
+# being named here at all.
+#
+#   docs/from_core   inbound memos: RECEIVED, frozen verbatim, footer-sealed
+#   docs/to_core     outbound memos: sealed with digests over exact bytes
+#   vendor           vendored copies: frozen, digest-pinned, never edited in place
+#   fixtures         frozen model replies: byte-for-byte upstream copies, digest-pinned.
+#   docs/evidence    the C4 incident of record: live replies frozen 2026-08-22, digest-
+#                    pinned. Re-derivation re-classifies verdicts from these raw bytes,
+#                    so a formatter here can flip a verdict, not merely dirty a diff.
+#                    A formatter run over these would reformat the JSON -- key order,
+#                    separators, escaping -- and every measurement taken from them would
+#                    silently become a measurement of something else.
+#
+# The vendored tree is excluded for a second reason on top of byte-exactness: it is
+# not our code, so its style is not ours to correct.
+[tool.ruff]
+extend-exclude = ["docs/from_core", "docs/to_core", "vendor", "fixtures", "docs/evidence"]
+line-length = 96
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "UP", "B"]
+
+[tool.black]
+line-length = 96
+force-exclude = '''
+(
+    docs/from_core
+  | docs/to_core
+  | vendor
+  | fixtures
+  | docs/evidence
+)
+'''
+
+[tool.isort]
+skip_glob = ["docs/from_core/*", "docs/to_core/*", "vendor/*", "fixtures/*",
+             "docs/evidence/*"]

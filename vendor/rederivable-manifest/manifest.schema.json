@@ -1,0 +1,71 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "rederivable-manifest/1",
+  "title": "Re-derivable verdict manifest",
+  "description": "Content-addressed receipt for a verdict v = I(E) with trust set T. Digest field names and algorithm are fixed by Core->Delivery Response 002 (2026-08-20): e_digest, i_digest, t_digest, v_digest, anchor_ref; SHA-256, lowercase hex, over canonical bytes (canonical.py). E, I, and T are carried as opaque digests so their preimages can evolve (e.g. verdict-instruments to stage-attribution instruments) without re-hashing frozen receipts.",
+  "type": "object",
+  "required": ["schema", "created_at", "unicode_version", "evidence", "instrument", "trust", "verdict", "e_digest", "i_digest", "t_digest", "v_digest", "anchor_ref", "manifest_id"],
+  "additionalProperties": false,
+  "properties": {
+    "schema": { "const": "rederivable-manifest/1" },
+    "created_at": {
+      "type": "string",
+      "description": "RFC3339 UTC 'Z', canonical form (full seconds; fractional seconds shortest-exact, omitted when zero)."
+    },
+    "unicode_version": {
+      "type": "string",
+      "description": "Unicode Character Database version of the sealing runtime (E14). The ACJ v2 hash preimage itself is UCD-independent (no normalisation); this field makes UCD-sensitive instrument operations (e.g. casefold) diagnosable when a verifier on a different runtime cannot re-derive."
+    },
+    "evidence": {
+      "type": "object",
+      "required": ["ref"],
+      "additionalProperties": false,
+      "properties": {
+        "ref": { "type": "string", "description": "Path or locator of the archived evidence, hashed verbatim." }
+      }
+    },
+    "instrument": {
+      "type": "object",
+      "required": ["id"],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "type": "string", "description": "Human-readable instrument identity, e.g. refusal_sentinel@v3. The binding identity is i_digest." }
+      }
+    },
+    "trust": {
+      "type": "object",
+      "required": ["set"],
+      "additionalProperties": false,
+      "properties": {
+        "set": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Declared trust set T. Empty array = archive-closed (T=∅); [\"M\"] = dependency-closed; larger sets = T-closed."
+        }
+      }
+    },
+    "verdict": {
+      "type": "object",
+      "description": "The verdict content v, inline, in canonical structure (decimal quantities as canonical strings; no floats)."
+    },
+    "e_digest": { "$ref": "#/$defs/sha256hex" },
+    "i_digest": { "$ref": "#/$defs/sha256hex" },
+    "t_digest": { "$ref": "#/$defs/sha256hex" },
+    "v_digest": { "$ref": "#/$defs/sha256hex" },
+    "fidelity": {
+      "enum": ["exact", "attested"],
+      "description": "OPTIONAL. On-face fidelity tier of the provenance the instrument consumed: 'exact' (provenance carried through the primitives; archive-closed, no error term) vs 'attested' (alignment-inferred at boundaries; stated error bound). Distinct axis from trust.set, which grades the trust base (archive-/dependency-/T-closed), not the input provenance's fidelity."
+    },
+    "anchor_ref": {
+      "oneOf": [{ "type": "null" }, { "type": "string" }],
+      "description": "Reference to the periodic Merkle anchor covering this manifest; null until anchored. Anchoring is periodic, not per-receipt."
+    },
+    "manifest_id": {
+      "$ref": "#/$defs/sha256hex",
+      "description": "SHA-256 of the canonical manifest content with this field absent. The manifest's own content address."
+    }
+  },
+  "$defs": {
+    "sha256hex": { "type": "string", "pattern": "^[0-9a-f]{64}$" }
+  }
+}

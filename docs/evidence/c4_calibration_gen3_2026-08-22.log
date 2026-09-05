@@ -1,0 +1,17 @@
+generation   gen-3-c4  digest=50230195e2b6ec7b  probes=30  package_size=9  shape=multihop
+model        claude-sonnet-5   (baseline only; the switch model is not queried)
+ceiling      spend: 0/150 calls (150 remaining) | tokens in/out 0/0 | models -
+
+served       claude-sonnet-5
+spend: 30/150 calls (120 remaining) | tokens in/out 10153/1337 | models {'claude-sonnet-5': 30}
+
+arm                failures   of   what a failure means
+answer_bearing            0   10   refused a question the package answers
+same_doc                  0   10   answered from the sibling's value
+cross_doc                 0   10   answered though the entity is absent
+
+headroom     0 failure(s) across 30 probes
+SATURATED    the baseline passes everything; this set cannot detect a difference between models. Do not run the swap against it.
+EXIT=2
+
+[exited with code 2]

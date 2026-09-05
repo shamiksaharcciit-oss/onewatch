@@ -1,0 +1,629 @@
+{
+  "cycle": "cycle6_pipeline_swap",
+  "timestamp_utc": "2026-08-05T20:23:02Z",
+  "monitored_pipeline": "U256",
+  "previous_monitored_pipeline": "F768",
+  "corpus": "v3",
+  "model_requested": "claude-sonnet-5",
+  "model_served": [
+    "claude-sonnet-5"
+  ],
+  "denominators": {
+    "wrong_abstention": 27,
+    "same_doc": 27,
+    "cross_doc": 26
+  },
+  "cascade_retirements": [
+    {
+      "query_id": "A-014-aster-router::f1",
+      "leg": "cross_doc",
+      "cause": "depends_on_retired_span(A-030-kestrel-broker::syn)",
+      "action": "LEG RETIRED \u2014 the construction depends on a span retired in the v3 release; constructions depending on a disturbed span retire with it",
+      "successor": "A-030-kestrel-broker::syn"
+    }
+  ],
+  "rates": {
+    "wrong_abstention": {
+      "numerator": 2,
+      "denominator": 27
+    },
+    "unsupported_answer_same_doc": {
+      "numerator": 19,
+      "denominator": 27
+    },
+    "unsupported_answer_cross_doc": {
+      "numerator": 4,
+      "denominator": 26
+    }
+  },
+  "rates_v2": {
+    "wrong_abstention": {
+      "numerator": 2,
+      "denominator": 27
+    },
+    "unsupported_answer_same_doc": {
+      "numerator": 12,
+      "denominator": 27
+    },
+    "unsupported_answer_cross_doc": {
+      "numerator": 0,
+      "denominator": 26
+    }
+  },
+  "_note": "per-counter denominators; scored under classifier v1 and v2 side by side",
+  "cost": {
+    "llm_calls": 80,
+    "llm_tokens": 181634,
+    "input_tokens": 178893,
+    "output_tokens": 2741,
+    "cache_hits": 0,
+    "est_usd": 0.963
+  },
+  "seconds": 228.0,
+  "probes": [
+    {
+      "query_id": "A-001-basalt-cache::f7",
+      "replies": {
+        "answer_bearing": {
+          "text": "HNSW",
+          "refusal_v1": false,
+          "refusal_v2": false
+        },
+        "same_doc": {
+          "text": "NOT FOUND",
+          "refusal_v1": true,
+          "refusal_v2": true
+        },
+        "cross_doc": {
+          "text": "NOT FOUND",
+          "refusal_v1": true,
+          "refusal_v2": true
+        }
+      },
+      "retired_legs": []
+    },
+    {
+      "query_id": "A-018-verde-compactor::f3",
+      "replies": {
+        "answer_bearing": {
+          "text": "Protobuf",
+          "refusal_v1": false,
+          "refusal_v2": false
+        },
+        "same_doc": {
+          "text": "NOT FOUND",
+          "refusal_v1": true,
+          "refusal_v2": true
+        },
+        "cross_doc": {
+          "text": "NOT FOUND",
+          "refusal_v1": true,
+          "refusal_v2": true
+        }
+      },
+      "retired_legs": []
+    },
+    {
+      "query_id": "A-040-marlin-planner::syn",
+      "replies": {
+        "answer_bearing": {
+          "text": "The key configuration defaults of the Marlin planner are:\n\n- \"The Marlin planner persists its index to disk in the ORC file format.\"\n- \"The system uses the ScaNN algorithm for approximate nearest-neighbor search.\"\n- \"The Marlin planner evicts hot vectors using a LRU replacement policy.\"\n- \"The Marlin planner applies a default request timeout of 500 milliseconds.\"\n- \"This component listens for gRPC traffic on port 8443 by default.\"\n- \"The Marlin planner reached general availability in release v4.0.0.\"",
+          "refusal_v1": false,
+          "refusal_v2": false
+        },
+        "same_doc": {
+          "text": "The Marlin planner's key configuration defaults mentioned in the context are:\n\n- \"The Marlin planner evicts hot vectors using a LRU replacement policy.\"\n- \"The Marlin planner applies a default request timeout of 500 milliseconds.\"\n- \"The Marlin planner reached general availability in release v4.0.0.\"\n- \"The Marlin planner is distributed under the MIT license.\"",
+          "refusal_v1": false,
+          "refusal_v2": false
+        },
+        "cross_doc": {
+          "text": "NOT FOUND",
+          "refusal_v1": true,
+          "refusal_v2": true
+        }
+      },
+      "retired_legs": []
+    },
+    {
+      "query_id": "A-025-juniper-cache::mh",
+      "replies": {
+        "answer_bearing": {
+          "text": "The Juniper cache listens for gRPC traffic on port 7000 by default.",
+          "refusal_v1": false,
+          "refusal_v2": false
+        },
+        "same_doc": {
+          "text": "NOT FOUND",
+          "refusal_v1": true,
+          "refusal_v2": true
+        },
+        "cross_doc": {
+          "text": "NOT FOUND",
+          "refusal_v1": true,
+          "refusal_v2": true
+        }
+      },
+      "retired_legs": []
+    },
+    {
+      "query_id": "A-019-crag-broker::syn",
+      "replies": {
+        "answer_bearing": {
+          "text": "The Crag broker applies a default request timeout of 350 milliseconds.",
+          "refusal_v1": false,
+          "refusal_v2": false
+        },
+        "same_doc": {
+          "text": "The key configuration defaults of the Crag broker are:\n\n- \"The Crag broker sustains up to 9500 queries per second on a single node.\"\n- \"The Crag broker applies a default request timeout of 350 milliseconds.\"\n- \"The Crag broker uses the Annoy algorithm for approximate nearest-neighbor search.\"\n- \"The Crag broker persists its index to disk in the Avro file format.\"",
+          "refusal_v1": false,
+          "refusal_v2": false
+        },
+        "cross_doc": {
+          "text": "NOT FOUND",
+          "refusal_v1": true,
+          "refusal_v2": true
+        }
+      },
+      "retired_legs": []
+    },
+    {
+      "query_id": "A-015-beacon-scheduler::f2",
+      "replies": {
+        "answer_bearing": {
+          "text": "900 milliseconds",
+          "refusal_v1": false,
+          "refusal_v2": false
+        },
+        "same_doc": {
+          "text": "900 milliseconds.",
+          "refusal_v1": false,
+          "refusal_v2": false
+        },
+        "cross_doc": {
+          "text": "NOT FOUND",
+          "refusal_v1": true,
+          "refusal_v2": true
+        }
+      },
+      "retired_legs": []
+    },
+    {
+      "query_id": "A-034-cirrus-sharder::syn",
+      "replies": {
+        "answer_bearing": {
+          "text": "The key configuration defaults of the Cirrus sharder are:\n\n- \"The Cirrus sharder sustains up to 3300 queries per second on a single node.\"\n- \"The Cirrus sharder evicts hot vectors using a LRU replacement policy.\"\n- \"The Cirrus sharder listens for gRPC traffic on port 6565 by default.\"\n- \"The Cirrus sharder persists its index to disk in the Protobuf file format.\"\n- \"This component applies a default request timeout of 900 milliseconds.\"\n- \"The system uses the ScaNN algorithm for approximate nearest-neighbor search.\"",
+          "refusal_v1": false,
+          "refusal_v2": false
+        },
+        "same_doc": {
+          "text": "The key configuration defaults of the Cirrus sharder are:\n\n- It \"evicts hot vectors using a LRU replacement policy\"\n- It \"listens for gRPC traffic on port 6565 by default\"\n- It \"persists its index to disk in the Protobuf file format\"\n\nAdditionally, \"The system uses the ScaNN algorithm for approximate nearest-neighbor search.\"",
+          "refusal_v1": false,
+          "refusal_v2": false
+        },
+        "cross_doc": {
+          "text": "NOT FOUND",
+          "refusal_v1": true,
+          "refusal_v2": true
+        }
+      },
+      "retired_legs": []
+    },
+    {
+      "query_id": "A-019-crag-broker::f4",
+      "replies": {
+        "answer_bearing": {
+          "text": "NOT FOUND",
+          "refusal_v1": true,
+          "refusal_v2": true
+        },
+        "same_doc": {
+          "text": "AGPL-3.0",
+          "refusal_v1": false,
+          "refusal_v2": false
+        },
+        "cross_doc": {
+          "text": "NOT FOUND",
+          "refusal_v1": true,
+          "refusal_v2": true
+        }
+      },
+      "retired_legs": []
+    },
+    {
+      "query_id": "A-001-basalt-cache::syn",
+      "replies": {
+        "answer_bearing": {
+          "text": "Based on the context, the key configuration defaults are:\n\n- \"The system evicts hot vectors using a S3-FIFO replacement policy.\"\n- \"The system sustains up to 18000 queries per second on a single node.\"\n- \"This component persists its index to disk in the Protobuf file format.\"\n- \"This system reached general availability in release v5.1.4.\"\n- \"The Basalt cache applies a default request timeout of 1200 milliseconds.\"\n- \"This system listens for gRPC traffic on port 50051 by default.\"",
+          "refusal_v1": false,
+          "refusal_v2": false
+        },
+        "same_doc": {
+          "text": "The key configuration defaults of the Basalt cache are: \"The Basalt cache applies a default request timeout of 1200 milliseconds\" and \"The Basalt cache is distributed under the Apache-2.0 license.\"",
+          "refusal_v1": false,
+          "refusal_v2": false
+        },
+        "cross_doc": {
+          "text": "NOT FOUND",
+          "refusal_v1": true,
+          "refusal_v2": true
+        }
+      },
+      "retired_legs": []
+    },
+    {
+      "query_id": "A-036-halcyon-cache::f4",
+      "replies": {
+        "answer_bearing": {
+          "text": "42000 queries per second",
+          "refusal_v1": false,
+          "refusal_v2": false
+        },
+        "same_doc": {
+          "text": "42000 queries per second on a single node.",
+          "refusal_v1": false,
+          "refusal_v2": false
+        },
+        "cross_doc": {
+          "text": "NOT FOUND",
+          "refusal_v1": true,
+          "refusal_v2": true
+        }
+      },
+      "retired_legs": []
+    },
+    {
+      "query_id": "A-030-kestrel-broker::f4",
+      "replies": {
+        "answer_bearing": {
+          "text": "The Kestrel broker applies a default request timeout of 900 milliseconds.",
+          "refusal_v1": false,
+          "refusal_v2": false
+        },
+        "same_doc": {
+          "text": "NOT FOUND",
+          "refusal_v1": true,
+          "refusal_v2": true
+        },
+        "cross_doc": {
+          "text": "NOT FOUND",
+          "refusal_v1": true,
+          "refusal_v2": true
+        }
+      },
+      "retired_legs": []
+    },
+    {
+      "query_id": "A-014-aster-router::f1",
+      "replies": {
+        "answer_bearing": {
+          "text": "ORC",
+          "refusal_v1": false,
+          "refusal_v2": false
+        },
+        "same_doc": {
+          "text": "NOT FOUND",
+          "refusal_v1": true,
+          "refusal_v2": true
+        }
+      },
+      "retired_legs": [
+        "cross_doc"
+      ]
+    },
+    {
+      "query_id": "A-014-aster-router::f3",
+      "replies": {
+        "answer_bearing": {
+          "text": "1200 milliseconds",
+          "refusal_v1": false,
+          "refusal_v2": false
+        },
+        "same_doc": {
+          "text": "NOT FOUND",
+          "refusal_v1": true,
+          "refusal_v2": true
+        },
+        "cross_doc": {
+          "text": "NOT FOUND",
+          "refusal_v1": true,
+          "refusal_v2": true
+        }
+      },
+      "retired_legs": []
+    },
+    {
+      "query_id": "A-037-vega-router::f4",
+      "replies": {
+        "answer_bearing": {
+          "text": "NOT FOUND",
+          "refusal_v1": true,
+          "refusal_v2": true
+        },
+        "same_doc": {
+          "text": "NOT FOUND",
+          "refusal_v1": true,
+          "refusal_v2": true
+        },
+        "cross_doc": {
+          "text": "NOT FOUND",
+          "refusal_v1": true,
+          "refusal_v2": true
+        }
+      },
+      "retired_legs": []
+    },
+    {
+      "query_id": "A-026-krait-router::syn",
+      "replies": {
+        "answer_bearing": {
+          "text": "The Krait router listens for gRPC traffic on port 8443 by default.",
+          "refusal_v1": false,
+          "refusal_v2": false
+        },
+        "same_doc": {
+          "text": "The Krait router reached general availability in release v5.1.4.",
+          "refusal_v1": false,
+          "refusal_v2": false
+        },
+        "cross_doc": {
+          "text": "NOT FOUND",
+          "refusal_v1": true,
+          "refusal_v2": true
+        }
+      },
+      "retired_legs": []
+    },
+    {
+      "query_id": "A-019-crag-broker::f3",
+      "replies": {
+        "answer_bearing": {
+          "text": "The Crag broker applies a default request timeout of 350 milliseconds.",
+          "refusal_v1": false,
+          "refusal_v2": false
+        },
+        "same_doc": {
+          "text": "NOT FOUND.",
+          "refusal_v1": false,
+          "refusal_v2": true
+        },
+        "cross_doc": {
+          "text": "NOT FOUND",
+          "refusal_v1": true,
+          "refusal_v2": true
+        }
+      },
+      "retired_legs": []
+    },
+    {
+      "query_id": "A-010-marlin-collator::syn",
+      "replies": {
+        "answer_bearing": {
+          "text": "The Marlin collator has the following key configuration defaults:\n\n- It \"sustains up to 67000 queries per second on a single node.\"\n- It \"uses the IVF-PQ algorithm for approximate nearest-neighbor search.\"\n- It \"is distributed under the AGPL-3.0 license.\"\n- It \"applies a default request timeout of 900 milliseconds.\"\n- It \"evicts hot vectors using a S3-FIFO replacement policy.\"\n- It \"listens for gRPC traffic on port 7000 by default.\"",
+          "refusal_v1": false,
+          "refusal_v2": false
+        },
+        "same_doc": {
+          "text": "Based on the context, the key configuration defaults of the Marlin collator are:\n\n- \"The Marlin collator is distributed under the AGPL-3.0 license.\"\n- \"The Marlin collator applies a default request timeout of 900 milliseconds.\"\n- \"The Marlin collator evicts hot vectors using a S3-FIFO replacement policy.\"\n- \"This component uses the IVF-PQ algorithm for approximate nearest-neighbor search.\"\n- \"It listens for gRPC traffic on port 7000 by default.\"",
+          "refusal_v1": false,
+          "refusal_v2": false
+        },
+        "cross_doc": {
+          "text": "NOT FOUND",
+          "refusal_v1": true,
+          "refusal_v2": true
+        }
+      },
+      "retired_legs": []
+    },
+    {
+      "query_id": "A-005-onyx-planner::syn",
+      "replies": {
+        "answer_bearing": {
+          "text": "- \"The Onyx planner sustains up to 18000 queries per second on a single node.\"\n- \"The Onyx planner evicts hot vectors using a 2Q replacement policy.\"\n- \"The Onyx planner listens for gRPC traffic on port 7000 by default.\"",
+          "refusal_v1": false,
+          "refusal_v2": false
+        },
+        "same_doc": {
+          "text": "The key configuration defaults of the Onyx planner are:\n\n- \"The Onyx planner sustains up to 18000 queries per second on a single node.\"\n- \"The Onyx planner evicts hot vectors using a 2Q replacement policy.\"\n- \"The Onyx planner listens for gRPC traffic on port 7000 by default.\"",
+          "refusal_v1": false,
+          "refusal_v2": false
+        },
+        "cross_doc": {
+          "text": "NOT FOUND",
+          "refusal_v1": true,
+          "refusal_v2": true
+        }
+      },
+      "retired_legs": []
+    },
+    {
+      "query_id": "A-035-onyx-indexer::f2",
+      "replies": {
+        "answer_bearing": {
+          "text": "MPL-2.0\n\nQuote: \"The Onyx indexer is distributed under the MPL-2.0 license.\"",
+          "refusal_v1": false,
+          "refusal_v2": false
+        },
+        "same_doc": {
+          "text": "NOT FOUND.",
+          "refusal_v1": false,
+          "refusal_v2": true
+        },
+        "cross_doc": {
+          "text": "NOT FOUND",
+          "refusal_v1": true,
+          "refusal_v2": true
+        }
+      },
+      "retired_legs": []
+    },
+    {
+      "query_id": "A-016-nimbus-gateway::f3",
+      "replies": {
+        "answer_bearing": {
+          "text": "18000 queries per second \u2014 \"This component sustains up to 18000 queries per second on a single node.\"",
+          "refusal_v1": false,
+          "refusal_v2": false
+        },
+        "same_doc": {
+          "text": "NOT FOUND.",
+          "refusal_v1": false,
+          "refusal_v2": true
+        },
+        "cross_doc": {
+          "text": "NOT FOUND.",
+          "refusal_v1": false,
+          "refusal_v2": true
+        }
+      },
+      "retired_legs": []
+    },
+    {
+      "query_id": "A-000-kestrel-indexer::f1",
+      "replies": {
+        "answer_bearing": {
+          "text": "This system listens for gRPC traffic on port 8081 by default.",
+          "refusal_v1": false,
+          "refusal_v2": false
+        },
+        "same_doc": {
+          "text": "NOT FOUND.",
+          "refusal_v1": false,
+          "refusal_v2": true
+        },
+        "cross_doc": {
+          "text": "NOT FOUND",
+          "refusal_v1": true,
+          "refusal_v2": true
+        }
+      },
+      "retired_legs": []
+    },
+    {
+      "query_id": "A-019-crag-broker::f5",
+      "replies": {
+        "answer_bearing": {
+          "text": "The Crag broker uses the Annoy algorithm for approximate nearest-neighbor search.",
+          "refusal_v1": false,
+          "refusal_v2": false
+        },
+        "same_doc": {
+          "text": "NOT FOUND.",
+          "refusal_v1": false,
+          "refusal_v2": true
+        },
+        "cross_doc": {
+          "text": "NOT FOUND.",
+          "refusal_v1": false,
+          "refusal_v2": true
+        }
+      },
+      "retired_legs": []
+    },
+    {
+      "query_id": "A-002-cobalt-router::f0",
+      "replies": {
+        "answer_bearing": {
+          "text": "8081",
+          "refusal_v1": false,
+          "refusal_v2": false
+        },
+        "same_doc": {
+          "text": "NOT FOUND.",
+          "refusal_v1": false,
+          "refusal_v2": true
+        },
+        "cross_doc": {
+          "text": "NOT FOUND.",
+          "refusal_v1": false,
+          "refusal_v2": true
+        }
+      },
+      "retired_legs": []
+    },
+    {
+      "query_id": "A-016-nimbus-gateway::syn",
+      "replies": {
+        "answer_bearing": {
+          "text": "The Nimbus gateway uses the DiskANN algorithm for approximate nearest-neighbor search. The Nimbus gateway listens for gRPC traffic on port 9090 by default. The Nimbus gateway persists its index to disk in the ORC file format.",
+          "refusal_v1": false,
+          "refusal_v2": false
+        },
+        "same_doc": {
+          "text": "Based on the context, the Nimbus gateway's key configuration defaults are:\n\n- \"The Nimbus gateway uses the DiskANN algorithm for approximate nearest-neighbor search.\"\n- \"The Nimbus gateway listens for gRPC traffic on port 9090 by default.\"\n- \"The Nimbus gateway persists its index to disk in the ORC file format.\"",
+          "refusal_v1": false,
+          "refusal_v2": false
+        },
+        "cross_doc": {
+          "text": "NOT FOUND",
+          "refusal_v1": true,
+          "refusal_v2": true
+        }
+      },
+      "retired_legs": []
+    },
+    {
+      "query_id": "A-031-basalt-resolver::syn",
+      "replies": {
+        "answer_bearing": {
+          "text": "The key configuration defaults of the Basalt resolver are:\n\n- \"The Basalt resolver persists its index to disk in the Avro file format.\"\n- \"The Basalt resolver sustains up to 9500 queries per second on a single node.\"\n- \"The Basalt resolver is distributed under the GPL-3.0 license.\"\n- \"This system uses the HNSW algorithm for approximate nearest-neighbor search.\"\n- \"This system reached general availability in release v5.1.4.\"",
+          "refusal_v1": false,
+          "refusal_v2": false
+        },
+        "same_doc": {
+          "text": "The Basalt resolver sustains up to 9500 queries per second on a single node, and is distributed under the GPL-3.0 license.",
+          "refusal_v1": false,
+          "refusal_v2": false
+        },
+        "cross_doc": {
+          "text": "NOT FOUND.",
+          "refusal_v1": false,
+          "refusal_v2": true
+        }
+      },
+      "retired_legs": []
+    },
+    {
+      "query_id": "A-021-fable-ledger::mh",
+      "replies": {
+        "answer_bearing": {
+          "text": "BSD-3-Clause",
+          "refusal_v1": false,
+          "refusal_v2": false
+        },
+        "same_doc": {
+          "text": "NOT FOUND",
+          "refusal_v1": true,
+          "refusal_v2": true
+        },
+        "cross_doc": {
+          "text": "NOT FOUND",
+          "refusal_v1": true,
+          "refusal_v2": true
+        }
+      },
+      "retired_legs": []
+    },
+    {
+      "query_id": "A-034-cirrus-sharder::f3",
+      "replies": {
+        "answer_bearing": {
+          "text": "The Cirrus sharder listens for gRPC traffic on port 6565 by default.",
+          "refusal_v1": false,
+          "refusal_v2": false
+        },
+        "same_doc": {
+          "text": "NOT FOUND.",
+          "refusal_v1": false,
+          "refusal_v2": true
+        },
+        "cross_doc": {
+          "text": "NOT FOUND",
+          "refusal_v1": true,
+          "refusal_v2": true
+        }
+      },
+      "retired_legs": []
+    }
+  ]
+}

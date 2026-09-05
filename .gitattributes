@@ -1,0 +1,104 @@
+# .gitattributes — byte-exactness enforcement (E10, layer 1 of 3)
+#
+# WHY THIS FILE EXISTS
+# -------------------
+# This repository's product thesis is that a receipt is verifiable byte-for-byte by
+# a third party. Every integrity claim it makes — memo `Integrity:` footers, the
+# vendored manifest's digest pin, frozen RECEIVED responses — is a digest over exact
+# bytes. Git's end-of-line translation is a byte-rewriting tool. It is therefore
+# excluded here, globally, for the same reason formatters, linters and auto-fixers
+# are excluded from every received-data path.
+#
+# THIS IS NOT HYPOTHETICAL. Measured on 2026-08-21, on this repository's own
+# development machine (Git for Windows, `core.autocrlf=true` set in
+# C:/Program Files/Git/etc/gitconfig — the platform default, not a local choice):
+#
+#   a cold clone of docs/from_core/Core_to_Canary_Response_001_2026-08-21.md
+#   without this file produced 8673 bytes instead of 8533 — 140 CR bytes injected —
+#   and scripts/verify_memo.py returned UNVERIFIABLE (exit 3) on a memo that
+#   verifies OK (exit 0) in the working tree.
+#
+# The committed blob was correct in both cases. The corruption happens at checkout.
+# That is the trap: the repository looks clean to the author and fails for the
+# verifier, which is precisely the failure mode a change-evidence tool cannot have.
+#
+# `-text` means: never translate line endings, in either direction, on any path.
+# It is set for `*` rather than only for the received-data paths, because the
+# discipline is not "protect the files we currently remember are byte-sensitive" —
+# it is "this repository does not rewrite bytes." A path added later inherits the
+# guarantee without anyone having to remember to come back here.
+*                       -text
+
+# --- Reinforcement for the paths where a byte change is an integrity failure ---
+# These entries are redundant under `* -text` above, and are kept deliberately: they
+# state at the path what the global rule states in the abstract, so that anyone
+# reading a diff of a received-data directory sees the rule that governs it. If the
+# global line is ever weakened, these must survive.
+
+# Inbound memos from core. RECEIVED data: frozen verbatim, never normalised. Their
+# `Integrity:` footers are digests over the exact bytes as delivered.
+docs/from_core/**       -text
+
+# Outbound memos to core. Sealed with footers computed by scripts/verify_memo.py;
+# a byte rewritten after sealing invalidates the seal.
+docs/to_core/**         -text
+
+# Vendored rederivable-manifest v3, disk-copied from the forensics repo and pinned by
+# vendor/rederivable-manifest.SHA256. Vendored copies are frozen and are never edited
+# in place (core R-C001): a byte changed here is indistinguishable from tampering,
+# which is the entire point of the digest pin.
+vendor/**               -text
+
+# Frozen model replies from the paper-2 cycles. RECEIVED data: byte-for-byte copies of
+# upstream artifacts, pinned by fixtures/paper2.SHA256. Reformatting one would change its
+# digest and quietly invalidate every measurement taken from it.
+fixtures/**             -text
+
+# The C4 incident of record: the complete frozen store from the live phase of 2026-08-22,
+# brought under repository custody on 2026-08-27 (Core -> Canary Response 011 §2). RECEIVED
+# data in the strongest sense in this repository -- every byte under `runs/` came back from a
+# live endpoint, and re-derivation re-classifies verdicts FROM THOSE RAW BYTES rather than
+# reading back a recorded verdict. So a formatter or an end-of-line translation here does not
+# merely dirty a diff: it changes what the instrument reads, and can flip a verdict in the
+# artifact this pillar ships. Pinned by
+# docs/evidence/c4-incident-of-record/c4-incident-of-record.SHA256 and checked by
+# tests/test_byte_discipline.py. These files are never edited; corrections go in INTEGRITY.md.
+docs/evidence/**        -text
+
+# The vendored oneview design spec. RECEIVED data: core's delivery, disk-copied from the
+# onedoor repo and byte-pinned by canary/viewer/tokens.py:SPEC_DIGEST. The viewer reads its
+# palette OUT OF THIS FILE at import time rather than carrying a transcribed copy, so a byte
+# changed here changes what the page is painted with -- and X-6 says a drifted spec raises
+# rather than degrading to a bundled fallback. Checked by tests/viewer/test_structure.py.
+canary/viewer/_vendor/** -text
+
+# Zip archives carry memos between sessions; the relay is download-and-move only.
+*.zip                   -text -diff binary
+
+# ---------------------------------------------------------------------------------
+# GENERATED, NOT RECEIVED: the one exception to `* -text`, and why it is not one.
+# ---------------------------------------------------------------------------------
+# Every rule above protects RECEIVED bytes -- memos, vendored copies, frozen replies,
+# the incident of record. Those are evidence: a digest is taken over them and any
+# translation destroys it, so git must not touch them.
+#
+# `docs/launch/onewatch.html` is the opposite kind of file. Nothing is received; it is
+# a pure function of the store, regenerated by `python -m canary.viewer`, and the CI
+# gate "onewatch regenerates from the store" asserts that the committed page equals a
+# fresh generation. Under `* -text` that gate is platform-dependent: the viewer writes
+# through Python's text layer, so a Windows generation lands 133 CR bytes that a Linux
+# generation does not, and the committed page then differs from a fresh one on any
+# machine that is not the author's -- on a repository whose claim is that a stranger
+# can recompute what it publishes.
+#
+# Measured 2026-09-05, the first time this workflow ever ran: committed page 13132
+# bytes with 133 CR; fresh generation on Linux 12999 bytes with 0. Identical content.
+# (The viewer's own message reports 12962 -- that is the CHARACTER count, and the
+# 37-byte gap is UTF-8 multibyte: 25 '·', 3 '—', 3 '…'.)
+#
+# Normalising here is the repository's existing doctrine applied correctly, not an
+# exception to it: received bytes are never rewritten, generated structures are
+# canonicalised. The root fix -- having the viewer write LF explicitly rather than
+# through the platform's text layer -- is queued; this rule holds regardless of which
+# machine runs the generation, which is the property the gate actually needs.
+docs/launch/onewatch.html   text eol=lf

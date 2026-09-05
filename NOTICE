@@ -1,0 +1,84 @@
+canary — change evidence for LLM/RAG systems
+Copyright 2026 Shamik Saha
+
+This product includes software developed for the paper-2 artifacts released as
+"provenance-canary".
+
+--------------------------------------------------------------------------------
+UPSTREAM SOURCE
+--------------------------------------------------------------------------------
+
+  Repository   https://github.com/shamiksaharcciit-oss/provenance-canary.git
+  Title        provenance-canary: deterministic runtime monitoring for
+               retrieval pipelines
+  Commit       370f5f34d0114e776ad36d70e216214f62f7cf88
+               (short 370f5f3; root tree ae15860b0f2eef72274406252c2ac28506aea9dd)
+  Subject      Initial public release: the paper-2 artifacts, released from disclosure hold
+  Author       Shamik Saha <shamik.saha.rcciit@gmail.com>
+  Date         2026-08-19
+  Tag          v0.3.5
+  Signature    commit object carries a SSH signature
+  License      Apache License 2.0
+  Paper        "When the System Changes Underneath You", doi:10.5281/zenodo.22017670
+
+The upstream commit is SSH-signed, so the provenance recorded here is
+attested rather than asserted. Its identity is corroborated by two independent
+artifacts that agree: a clone of the public repository, and an offline git bundle.
+Both carry the same root tree and the same 151 reachable objects; the
+measurement is in docs/to_core/Assessment_001_Addendum_A_2026-08-21.md.
+
+--------------------------------------------------------------------------------
+ATTRIBUTION AND SCOPE OF REUSE
+--------------------------------------------------------------------------------
+
+Apache-2.0 §4 requires that notices be retained in copied files. Two layers, both
+required, per the ruling in Core -> Canary Response 001 §4:
+
+  1. This root NOTICE names the source repository, commit, author and license.
+  2. Every transplanted file additionally carries a per-file provenance header
+     giving its upstream path, the commit it came from, and a "modified" flag
+     where it has been changed.
+
+The finer grain is deliberate. This programme's thesis is that provenance is
+recorded at the finest grain that stays true; its own source tree does not get a
+coarser standard than the receipts it emits.
+
+No upstream source file has been copied. The assessment in
+docs/to_core/Assessment_001_2026-08-21.md §8 recommended building the five run-loop
+components new and harvesting disciplines, patterns and offline fixtures rather
+than code, and that is what C2 did.
+
+Two things in this tree are nevertheless DERIVED from upstream and carry per-file
+provenance headers, because attribution is owed to derived work and not only to
+copied bytes:
+
+  canary/suite/refusal.py   The three refusal-sentinel classification RULES (v1, v2,
+                            v3) are upstream's, preserved exactly, including each
+                            boundary they refuse to cross. The code is new: upstream's
+                            are module-level predicates carrying a cross-repository
+                            import of v1's identity, and this engine needs a
+                            self-contained instrument object whose version can enter
+                            an i_digest. Marked REIMPLEMENTED, NOT COPIED -- and
+                            validated by reproducing upstream's published counts to
+                            the unit over upstream's own frozen replies.
+
+  fixtures/paper2/*.json    Byte-for-byte copies of upstream telemetry artifacts,
+                            pinned by fixtures/paper2.SHA256 and documented in
+                            fixtures/paper2/PROVENANCE.md. These are RECEIVED data:
+                            copied verbatim, never edited, never re-serialised.
+
+If a file is ever copied rather than derived, its header lands with it in the same
+commit, never afterwards.
+
+--------------------------------------------------------------------------------
+VENDORED COMPONENTS
+--------------------------------------------------------------------------------
+
+  vendor/rederivable-manifest/   rederivable-manifest v3, disk-copied from the
+                                 forensics repository via the clean channel and
+                                 pinned by vendor/rederivable-manifest.SHA256.
+
+Vendored copies are frozen and are never edited in place. A byte changed there is
+indistinguishable from tampering, which is the entire point of the digest pin.
+Errata against vendored files are recorded as annotations in INTEGRITY.md, never
+as edits to the file. See INTEGRITY.md, R-C001.

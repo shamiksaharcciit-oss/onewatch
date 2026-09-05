@@ -1,0 +1,5 @@
+{"id": "r1", "text": "I cannot overstate how useful this dataset is. Here is the summary you asked for: revenue grew 12% quarter over quarter, driven by the enterprise segment."}
+{"id": "r2", "text": "The parser was unable to read row 7 of the uploaded sheet, so I patched the delimiter handling and completed the export. All 240 rows are in the output file."}
+{"id": "r3", "text": "Done - the transfer completed. Note the API won't retry duplicates, which is exactly the behaviour you want for idempotent settlement."}
+{"id": "r4", "text": "Here are the Q3 figures, reconciled against the ledger: gross margin 41.2%, operating expenses down 3% on the prior quarter."}
+{"id": "r5", "text": "You can't go wrong with option B for the retry policy; I've applied it to the staging config and the tests pass."}

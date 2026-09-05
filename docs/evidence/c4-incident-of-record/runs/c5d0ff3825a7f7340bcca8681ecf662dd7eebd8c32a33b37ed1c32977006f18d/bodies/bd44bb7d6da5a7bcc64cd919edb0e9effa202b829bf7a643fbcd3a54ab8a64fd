@@ -1,0 +1,3 @@
+NOT FOUND
+
+The context only provides information about the halcyon indexer's eviction high-water mark (75 percent), but does not contain any information about the onyx sharder's eviction high-water mark.
