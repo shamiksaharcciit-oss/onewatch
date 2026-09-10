@@ -125,8 +125,9 @@ def test_the_banner_is_the_only_element_that_varies(page, health_page):
 def test_a_retirement_would_carry_no_banner_at_all():
     """A retirement is an event, not a verdict -- so it has no verdict banner.
 
-    Asserted against the renderer directly, because the switch is unthrown and no history
-    record exists to render (which is itself the point of the absence test below).
+    Asserted against the renderer directly: the retirement of 2026-09-10 is written to the
+    instrument history, not to the change receipts this page reads, so no history card
+    exists in this store to render (which is the point of the absence test below).
     """
     from canary.viewer.page import _verdict_banner
     from canary.viewer.model import Card, Verification
@@ -160,7 +161,7 @@ def test_absence_is_rendered_as_a_state(page):
 def test_the_two_absent_kinds_each_explain_themselves(page):
     body = content(page)
     assert "No instrument-health receipt has been written to this store" in body
-    assert "No generation has been retired" in body
+    assert "No retirement is recorded in this store" in body
     assert "Instrument health" in body and "Instrument history" in body
 
 
@@ -178,7 +179,7 @@ def test_every_label_survives_to_the_surface(page):
 
 
 @pytest.mark.parametrize("needle", [
-    "probe text not published", "never which stage",
+    "probe text not shown here", "never which stage",
     "read from a verified artifact", "python -m canary.viewer",
 ])
 def test_stripping_any_label_fails_the_label_test(page, needle):

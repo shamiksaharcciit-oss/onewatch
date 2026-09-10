@@ -307,7 +307,7 @@ def _absences(cards) -> list[Absence]:
                     "this store holds the change certificates of the live phase."))
     out.append(Absence(
         kind="history", heading="Instrument history",
-        because="No generation has been retired. Retirement is a one-way, dated, visible "
-                "instrument change and it has not happened; the generations below are "
-                "ACTIVE and their probe text is not published."))
+        because="No retirement is recorded in this store. Retirement is a one-way, dated, "
+                "visible instrument change, and when it happens it is written to the "
+                "instrument history rather than to the change receipts this page reads."))
     return out

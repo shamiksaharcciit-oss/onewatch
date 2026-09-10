@@ -93,8 +93,10 @@ Published together, because each of them is useless for checking without the oth
 - the incident of record itself, so a reader can run `rederive_incident.py` and check the
   anchor without asking anyone's permission
 - the re-scoring table under its label (`rescore_incident.py --markdown`)
-- the viewer, regenerated after Act 2 (`python -m canary.viewer`) so the page shows the
-  retirement rather than the absence notice it carries beforehand
+- the viewer, regenerated after Act 2 (`python -m canary.viewer`). It is a pure function of
+  the store, and a retirement is written to the instrument history rather than to the change
+  receipts the page reads — so the page reports what the store holds and leaves the
+  lifecycle to the history; it does not restate the retirement
 
 The viewer is a pure function of the store. Regenerating is the only way it changes, and
 there is no background process that could change it otherwise.

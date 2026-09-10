@@ -185,34 +185,39 @@ def test_probe_text_confinement_refuses_to_pass_on_an_empty_search(tmp_path):
 # ------------------------------------------------------------- conditions 1 and 4
 
 
-def test_gen_1_c4_is_not_retired_yet():
-    """Condition 4: the switch is thrown at the firing sequence, not before.
+def test_gen_1_c4_was_retired_at_the_firing_sequence():
+    """Condition 4, after the switch: a visible, dated instrument change.
 
-    Response 012 §4: retirement's only purpose is to permit disclosure, so it happens at
-    the moment of disclosure. Retiring early buys nothing -- the repository is private,
-    so nothing is exposed by waiting -- and closes optionality permanently, because an
-    unretired generation is still an instrument and a retired one never will be again.
-
-    When launch week arrives this test is the one that changes, deliberately and visibly.
+    Until 2026-09-10 this was `test_gen_1_c4_is_not_retired_yet` and asserted the absence
+    of an instrument-history record. It changed in the same commit as the retirement,
+    deliberately and visibly, exactly as its own failure message instructed. The frozen
+    receipts still read ACTIVE -- they were sealed before the switch, and that is the
+    point: the disclosure is checkable against evidence that predates it.
     """
-    assert not stage_disclosure.HISTORY.exists(), (
-        "an instrument-history record exists: the retirement switch has been thrown. If "
-        "that was the firing sequence, update this test in the same commit as the record.")
+    assert stage_disclosure.HISTORY.exists(), (
+        "the retirement record is missing: gen-1-c4 was retired on 2026-09-10 and "
+        "docs/launch/instrument-history.md is the dated record of it.")
+    record = stage_disclosure.HISTORY.read_text(encoding="utf-8")
+    assert "2026-09-10" in record
+    digest, _ = stage_disclosure.cited_generation_digest()
+    assert digest in record
     receipt = json.loads(stage_disclosure._read(
         next((INCIDENT / "receipts").iterdir())))
     assert receipt["target"]["generation"]["status"] == Status.ACTIVE.value
     assert receipt["target"]["generation"]["disclosed_at"] == ""
 
 
-def test_the_staged_package_says_it_must_not_be_published():
-    """While ACTIVE, the package must carry its own refusal on its front page.
+def test_the_disclosed_package_names_its_retirement():
+    """After the switch, the package's front page points at the dated record.
 
-    Staged artifacts get moved, copied and forwarded. One that does not say what it is
-    will eventually be published by someone who assumed a staging directory meant ready.
+    While ACTIVE this was `test_the_staged_package_says_it_must_not_be_published` and
+    asserted the refusal banner. A staged artifact must say it is not for publication; a
+    disclosed one must say what permitted its publication.
     """
     readme = (stage_disclosure.STAGING / "README.md").read_text(encoding="utf-8")
-    assert "NOT FOR PUBLICATION" in readme
-    assert "still ACTIVE" in readme
+    assert "NOT FOR PUBLICATION" not in readme
+    assert "retired to permit this disclosure" in readme
+    assert "instrument-history.md" in readme
 
 
 def test_firing_twice_is_refused(tmp_path, monkeypatch):

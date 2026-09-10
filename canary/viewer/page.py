@@ -167,10 +167,13 @@ def _generations(model: PageModel) -> str:
         f'<div class="frow"><span class="fk">{_e(g["generation_id"])}</span>'
         f'<span class="fv"><b class="fact">{_e(g["status"].upper())}</b> '
         f'<span class="m">{_e(g["digest"])}</span> '
-        f'<span class="dim">· {_e(g["n_probes"])} probes · probe text not published</span>'
+        f'<span class="dim">· {_e(g["n_probes"])} probes · probe text not shown here</span>'
         f'</span></div>'
         for g in model.generations)
-    return f'<div class="grid">{rows}</div>'
+    caption = ('<p class="lede">Status and digest as recorded in the receipts this page '
+               'reads; a generation\'s later lifecycle is written to the instrument '
+               'history, not here.</p>')
+    return f'{caption}<div class="grid">{rows}</div>'
 
 
 def render(model: PageModel) -> str:

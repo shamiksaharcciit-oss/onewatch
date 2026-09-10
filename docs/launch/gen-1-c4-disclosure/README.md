@@ -1,6 +1,6 @@
 # gen-1-c4 — disclosed probe set
 
-**NOT FOR PUBLICATION.** `gen-1-c4` is still ACTIVE. This package is staged ahead of launch week and the retirement switch has not been thrown.
+`gen-1-c4` was retired to permit this disclosure; see `docs/launch/instrument-history.md` for the dated record.
 
 ## What this is
 

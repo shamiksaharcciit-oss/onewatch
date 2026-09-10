@@ -165,8 +165,8 @@ def assert_labels_survive(html: str) -> None:
     """
     body = content(html)
     required = {
-        "probe text not published":
-            "an ACTIVE generation must be shown as a digest, never as probes",
+        "probe text not shown here":
+            "a generation must be shown as a digest, never as probes",
         "never which stage":
             "the anti-overclaim boundary must travel with the verdict",
         "read from a verified artifact":
@@ -188,10 +188,10 @@ def assert_absence_is_rendered_as_a_state(html: str) -> None:
     body = content(html)
     if "Nothing recorded" not in body:
         raise PropertyViolation("no absence is rendered; an empty section vanished")
-    if "No generation has been retired" not in body:
+    if "No retirement is recorded in this store" not in body:
         raise PropertyViolation(
             "the instrument-history absence does not explain itself; a reader cannot tell "
-            "'not retired' from 'no rotation programme'")
+            "'no retirement recorded here' from 'no rotation programme'")
 
 
 def assert_every_page_property(html: str) -> None:
